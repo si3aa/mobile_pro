@@ -7,7 +7,7 @@ Widget defaultButton({
   double radius = 0.0,
   Color background = Colors.blue,
   bool isUpperCase = true,
-  required Function,
+  required Function function,
   required String text,
 }) =>
     Container(
@@ -18,7 +18,7 @@ Widget defaultButton({
         borderRadius: BorderRadius.circular(radius),
       ),
       child: MaterialButton(
-        onPressed: Function,
+        onPressed: function(),
         child: Text(
           isUpperCase ? text.toUpperCase() : text,
           style: const TextStyle(
@@ -27,25 +27,26 @@ Widget defaultButton({
         ),
       ),
     );
+//____________________________________________________________________________________//
 
 Widget defaultTextButton({
-  required Function,
+  required Function function,
   required String text,
 }) =>
     TextButton(
-      onPressed: Function,
+      onPressed: function(),
       child: Text(
         text.toUpperCase(),
       ),
     );
-
+//____________________________________________________________________________________//
 Widget defaultFormField({
   required TextEditingController controller,
   required TextInputType type,
   onSubmit,
   onChange,
   onTap,
-  required validat,
+  required Function validat,
   bool isPassword = false,
   required String lable,
   required IconData prefix,
@@ -58,7 +59,7 @@ Widget defaultFormField({
       keyboardType: type,
       onFieldSubmitted: onSubmit,
       onChanged: onChange,
-      validator: validat,
+      validator: validat(),
       onTap: onTap,
       enabled: isClickable,
       obscureText: isPassword,
@@ -78,7 +79,7 @@ Widget defaultFormField({
             : null,
       ),
     );
-
+//____________________________________________________________________________________//
 Widget buildTaskItem(Map model, context) => Dismissible(
       key: Key(model['id'].toString()),
       child: Padding(
@@ -144,7 +145,7 @@ Widget buildTaskItem(Map model, context) => Dismissible(
         AppCubit.get(context).delete(id: model['id']);
       },
     );
-
+//____________________________________________________________________________________//
 Widget tasksBuilder({
   required List<Map> tasks,
 }) =>
@@ -187,7 +188,7 @@ Widget tasksBuilder({
         ),
       ),
     );
-
+//____________________________________________________________________________________//
 Widget myDivider() => Padding(
       padding: const EdgeInsetsDirectional.only(
         start: 20.0,
@@ -198,14 +199,14 @@ Widget myDivider() => Padding(
         color: Colors.grey[300],
       ),
     );
-
+//____________________________________________________________________________________//
 void navigateTo(context, widget) => Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => widget,
       ),
     );
-
+//____________________________________________________________________________________//
 void navigateAndFinish(context, widget) => Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(
@@ -213,8 +214,9 @@ void navigateAndFinish(context, widget) => Navigator.pushAndRemoveUntil(
       ),
       (Route<dynamic> route) => false,
     );
-
+//____________________________________________________________________________________//
 const kPrimaryColor = Color(0xff2B475E);
+//____________________________________________________________________________________//
 
 // ignore: must_be_immutable
 class CustomTextField extends StatelessWidget {
@@ -237,7 +239,7 @@ class CustomTextField extends StatelessWidget {
     );
   }
 }
-
+//____________________________________________________________________________________//
 // ignore: must_be_immutable
 class CustomButton extends StatelessWidget {
   CustomButton({super.key, required this.text});
