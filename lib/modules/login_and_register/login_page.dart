@@ -1,111 +1,147 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:pro/layouts/home_layout.dart';
 import 'package:pro/modules/login_and_register/sign_up_page.dart';
 import 'package:pro/widgets/shared.dart';
 
 // ignore: must_be_immutable
-class LoginPage extends StatelessWidget {
-  var emailController = TextEditingController();
-  var passwordController = TextEditingController();
-  final formKey = GlobalKey<FormState>();
-
+class LoginPage extends StatefulWidget {
   static String routeName = 'login';
 
-  LoginPage({super.key});
+  // LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final _emailController = TextEditingController();
+
+  final _passwordController = TextEditingController();
+
+  final _formKey = GlobalKey<FormState>();
+  bool isPassword = true;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kPrimaryColor,
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Form(
-            key: formKey,
-            child: Column(
-              children: [
-                const Spacer(flex: 2),
-                const Row(
-                  children: [
-                    Text(
-                      'SIGN IN',
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: Colors.white,
+      appBar: AppBar(
+        backgroundColor: kPrimaryColor,
+        title: const Text(
+          'Login',
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
+      ),
+      backgroundColor: Colors.white,
+      body: Center(
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'SIGN IN',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 24,
+                          color: Colors.black,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                defaultFormField(
-                    controller: emailController,
-                    type: TextInputType.emailAddress,
-                    validat: (String value) {
-                      if (value.isEmpty) {
-                        return 'email must not be empty';
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  defaultFormField(
+                    controller: _emailController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your email';
+                      }
+                      if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                        return 'Please enter a valid email';
                       }
                       return null;
                     },
                     lable: 'Email',
-                    prefix: Icons.email_outlined),
-                const SizedBox(
-                  height: 10,
-                ),
-                defaultFormField(
-                  controller: passwordController,
-                  type: TextInputType.visiblePassword,
-                  validat: (String value) {
-                    if (value.isEmpty) {
-                      return 'email must not be empty';
-                    }
-                    return null;
-                  },
-                  lable: ' Password',
-                  prefix: Icons.lock,
-                  suffix: Icons.remove_red_eye,
-                  isPassword: true,
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                defaultTextButton(
-                    function: () {
-                      if (formKey.currentState!.validate()) {
-                        print(emailController.text);
-                        print(passwordController.text);
-                        Navigator.pushReplacementNamed(
-                            context, HomeLayout.routeName);
+                    type: TextInputType.emailAddress,
+                    prefix: Icons.email,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  defaultFormField(
+                      isPassword: true,
+                      controller: _passwordController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your password';
+                        }
+
+                        return null;
+                      },
+                      lable: 'Password',
+                      type: TextInputType.visiblePassword,
+                      prefix: Icons.lock,
+                      suffix: isPassword ? Icons.visibility : Icons.visibility_off,
+                      suffixPressed: () {
+                        setState(() {
+                          isPassword = !isPassword;
+                        });
+                      }),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      if (_formKey.currentState?.validate() ?? false) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Logging in...'),
+                          ),
+                        );
+                        Navigator.pushNamed(context, HomeLayout.routeName);
                       }
                     },
-                    text: 'LOGIN'),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      'Don\'t have an account ?',
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
+                    child: CustomButton(
+                      text: 'Login',
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(context, SignUpPage.routeName);
-                      },
-                      child: const Text(
-                        '  Sign UP',
-                        style: TextStyle(color: Color(0xffC7EDE6)),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'Don\'t have an account ?',
+                        style: TextStyle(color: Colors.black, fontSize: 20),
                       ),
-                    )
-                  ],
-                ),
-                const Spacer(flex: 2),
-              ],
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, SignUpPage.routeName);
+                        },
+                        child: const Text(
+                          '  Sign UP',
+                          style: TextStyle(
+                              color: Colors.black87,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20),
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),

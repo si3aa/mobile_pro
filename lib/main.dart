@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: {
         LoginPage.routeName: (_) =>  LoginPage(),
-        SignUpPage.routeName: (_) => const SignUpPage(),
+        SignUpPage.routeName: (_) =>  SignUpPage(),
         HomeLayout.routeName: (_) => HomeLayout(),
         NewTaskScreen.routeName: (_) => const NewTaskScreen(),
         DoneTaskScreen.routeName: (_) => const DoneTaskScreen(),

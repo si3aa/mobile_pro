@@ -87,8 +87,8 @@ class HomeLayout extends StatelessWidget {
                                 defaultFormField(
                                   controller: titleController,
                                   type: TextInputType.text,
-                                  validat: (value) {
-                                    if (value.isEmpty) {
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
                                       return 'title must not be empty';
                                     }
                                     return null;
@@ -114,8 +114,8 @@ class HomeLayout extends StatelessWidget {
                                       },
                                     );
                                   },
-                                  validat: (value) {
-                                    if (value.isEmpty) {
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
                                       return 'time must not be empty';
                                     }
                                     return null;
@@ -142,8 +142,8 @@ class HomeLayout extends StatelessWidget {
                                       },
                                     );
                                   },
-                                  validat: (value) {
-                                    if (value.isEmpty) {
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
                                       return 'Date must not be empty';
                                     }
                                     return null;

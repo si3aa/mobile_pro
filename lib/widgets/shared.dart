@@ -46,7 +46,7 @@ Widget defaultFormField({
   onSubmit,
   onChange,
   onTap,
-  required Function validat,
+  required final String? Function(String?)? validator,
   bool isPassword = false,
   required String lable,
   required IconData prefix,
@@ -59,7 +59,7 @@ Widget defaultFormField({
       keyboardType: type,
       onFieldSubmitted: onSubmit,
       onChanged: onChange,
-      validator: validat(),
+      validator: validator,
       onTap: onTap,
       enabled: isClickable,
       obscureText: isPassword,
@@ -220,25 +220,31 @@ const kPrimaryColor = Color(0xff2B475E);
 
 // ignore: must_be_immutable
 class CustomTextField extends StatelessWidget {
-  CustomTextField({super.key, this.hintText});
-  String? hintText;
+  final String labelText;
+  final TextEditingController controller;
+  final String? Function(String?)? validator;
+  final bool obscureText;
+
+  const CustomTextField(
+      {super.key,
+      required this.labelText,
+      required this.controller,
+      this.validator,
+      this.obscureText = false});
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
+      controller: controller,
+      obscureText: obscureText,
       decoration: InputDecoration(
-        hintText: hintText,
-        hintStyle: const TextStyle(color: Colors.white),
-        enabledBorder: const OutlineInputBorder(
-            borderSide: BorderSide(
-          color: Colors.white,
-        )),
-        border: const OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.white),
-        ),
+        labelText: labelText,
+        border: const OutlineInputBorder(),
       ),
+      validator: validator,
     );
   }
 }
+
 //____________________________________________________________________________________//
 // ignore: must_be_immutable
 class CustomButton extends StatelessWidget {
@@ -248,11 +254,16 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(8)),
-      height: 40,
+          color: const Color(0xff2B475E),
+          borderRadius: BorderRadius.circular(8)),
+      height: 50,
       width: double.infinity,
       child: Center(
-        child: Text(text),
+        child: Text(
+          text,
+          style: const TextStyle(
+              color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+        ),
       ),
     );
   }
