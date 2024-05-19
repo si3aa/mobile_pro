@@ -21,6 +21,8 @@ class _LoginPageState extends State<LoginPage> {
 
   final _formKey = GlobalKey<FormState>();
   bool isPassword = true;
+  @override
+  
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +82,7 @@ class _LoginPageState extends State<LoginPage> {
                     height: 10,
                   ),
                   defaultFormField(
-                      isPassword: true,
+                      isPassword: isPassword,
                       controller: _passwordController,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -92,7 +94,8 @@ class _LoginPageState extends State<LoginPage> {
                       lable: 'Password',
                       type: TextInputType.visiblePassword,
                       prefix: Icons.lock,
-                      suffix: isPassword ? Icons.visibility : Icons.visibility_off,
+                      suffix:
+                          isPassword ? Icons.visibility : Icons.visibility_off,
                       suffixPressed: () {
                         setState(() {
                           isPassword = !isPassword;

@@ -1,15 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:pro/widgets/shared.dart';
 
-class SignUpPage extends StatelessWidget {
-  final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _confirmPasswordController = TextEditingController();
-
+class SignUpPage extends StatefulWidget {
   static String routeName = 'register';
 
   SignUpPage({super.key});
+
+  @override
+  State<SignUpPage> createState() => _SignUpPageState();
+}
+
+class _SignUpPageState extends State<SignUpPage> {
+  final _formKey = GlobalKey<FormState>();
+
+  final _emailController = TextEditingController();
+
+  final _passwordController = TextEditingController();
+
+  final _confirmPasswordController = TextEditingController();
+
+  bool isPassword = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,7 +71,7 @@ class SignUpPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 16.0),
                 defaultFormField(
-                  isPassword: true,
+                  isPassword: isPassword,
                   controller: _passwordController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -72,10 +83,16 @@ class SignUpPage extends StatelessWidget {
                   lable: 'Password',
                   type: TextInputType.visiblePassword,
                   prefix: Icons.lock,
-                  suffix: Icons.remove_red_eye,
+                   suffix: isPassword ? Icons.visibility : Icons.visibility_off,
+                   suffixPressed: () {
+                        setState(() {
+                          isPassword = !isPassword;
+                        });
+                      }
                 ),
                 const SizedBox(height: 16.0),
                 defaultFormField(
+                   isPassword: isPassword,
                     lable: 'Confirm Password',
                     controller: _confirmPasswordController,
                     validator: (value) {
@@ -89,8 +106,14 @@ class SignUpPage extends StatelessWidget {
                     },
                     type: TextInputType.visiblePassword,
                     prefix: Icons.lock,
-                     suffix: Icons.remove_red_eye,
-                    isPassword: true),
+                   
+                    suffix: isPassword ? Icons.visibility : Icons.visibility_off,
+                    suffixPressed: () {
+                        setState(() {
+                          isPassword =!isPassword;
+                        });
+                      }
+                    ),
                 const SizedBox(height: 16.0),
                 GestureDetector(
                   onTap: () {

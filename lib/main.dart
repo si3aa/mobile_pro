@@ -5,6 +5,7 @@ import 'package:pro/modules/doneTasks/done_tasks_screen.dart';
 import 'package:pro/modules/login_and_register/login_page.dart';
 import 'package:pro/modules/login_and_register/sign_up_page.dart';
 import 'package:pro/modules/newTasks/new_tasks_screen.dart';
+import 'package:pro/modules/splash/splash_screen.dart';
 
 
 void main() {
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: {
+        SplashScreen.routeName: (_) =>  SplashScreen(),
         LoginPage.routeName: (_) =>  LoginPage(),
         SignUpPage.routeName: (_) =>  SignUpPage(),
         HomeLayout.routeName: (_) => HomeLayout(),
@@ -26,7 +28,7 @@ class MyApp extends StatelessWidget {
         DoneTaskScreen.routeName: (_) => const DoneTaskScreen(),
         ArchivedTaskScreen.routeName: (_) => const ArchivedTaskScreen(),
       },
-      initialRoute: LoginPage.routeName,
+      initialRoute: SplashScreen.routeName,
     );
   }
 }
