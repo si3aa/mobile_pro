@@ -189,61 +189,61 @@ Widget tasksBuilder({
       ),
     );
 //____________________________________________________________________________________//
-Widget myDivider() => Padding(
-      padding: const EdgeInsetsDirectional.only(
-        start: 20.0,
-      ),
-      child: Container(
-        width: double.infinity,
-        height: 1.0,
-        color: Colors.grey[300],
-      ),
-    );
+// Widget myDivider() => Padding(
+//       padding: const EdgeInsetsDirectional.only(
+//         start: 20.0,
+//       ),
+//       child: Container(
+//         width: double.infinity,
+//         height: 1.0,
+//         color: Colors.grey[300],
+//       ),
+//     );
 //____________________________________________________________________________________//
-void navigateTo(context, widget) => Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => widget,
-      ),
-    );
+// void navigateTo(context, widget) => Navigator.push(
+//       context,
+//       MaterialPageRoute(
+//         builder: (context) => widget,
+//       ),
+//     );
 //____________________________________________________________________________________//
-void navigateAndFinish(context, widget) => Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(
-        builder: (context) => widget,
-      ),
-      (Route<dynamic> route) => false,
-    );
+// void navigateAndFinish(context, widget) => Navigator.pushAndRemoveUntil(
+//       context,
+//       MaterialPageRoute(
+//         builder: (context) => widget,
+//       ),
+//       (Route<dynamic> route) => false,
+//     );
 //____________________________________________________________________________________//
 const kPrimaryColor = Color(0xff2B475E);
 //____________________________________________________________________________________//
 
 // ignore: must_be_immutable
-class CustomTextField extends StatelessWidget {
-  final String labelText;
-  final TextEditingController controller;
-  final String? Function(String?)? validator;
-  final bool obscureText;
+// class CustomTextField extends StatelessWidget {
+//   final String labelText;
+//   final TextEditingController controller;
+//   final String? Function(String?)? validator;
+//   final bool obscureText;
 
-  const CustomTextField(
-      {super.key,
-      required this.labelText,
-      required this.controller,
-      this.validator,
-      this.obscureText = false});
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      controller: controller,
-      obscureText: obscureText,
-      decoration: InputDecoration(
-        labelText: labelText,
-        border: const OutlineInputBorder(),
-      ),
-      validator: validator,
-    );
-  }
-}
+//   const CustomTextField(
+//       {super.key,
+//       required this.labelText,
+//       required this.controller,
+//       this.validator,
+//       this.obscureText = false});
+//   @override
+//   Widget build(BuildContext context) {
+//     return TextFormField(
+//       controller: controller,
+//       obscureText: obscureText,
+//       decoration: InputDecoration(
+//         labelText: labelText,
+//         border: const OutlineInputBorder(),
+//       ),
+//       validator: validator,
+//     );
+//   }
+// }
 
 //____________________________________________________________________________________//
 // ignore: must_be_immutable

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pro/widgets/database.dart';
 import 'package:pro/widgets/shared.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -18,8 +19,12 @@ class _SignUpPageState extends State<SignUpPage> {
   final _passwordController = TextEditingController();
 
   final _confirmPasswordController = TextEditingController();
+  final DatabaseHelper _databaseHelper = DatabaseHelper();
 
   bool isPassword = true;
+
+  
+
 
   @override
   Widget build(BuildContext context) {
@@ -117,14 +122,8 @@ class _SignUpPageState extends State<SignUpPage> {
                 const SizedBox(height: 16.0),
                 GestureDetector(
                   onTap: () {
-                    if (_formKey.currentState?.validate() ?? false) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Registering...'),
-                        ),
-                      );
-                      Navigator.pop(context);
-                    }
+                    _register();
+                    
                   },
                   child: CustomButton(
                     text: 'Sign Up',
@@ -136,5 +135,24 @@ class _SignUpPageState extends State<SignUpPage> {
         ),
       ),
     );
+  }
+  void _register() async {
+    if (_formKey.currentState?.validate() ?? false) {
+      Map<String, dynamic> user = {
+        'email': _emailController.text,
+        'password': _passwordController.text,
+      };
+      try {
+        await _databaseHelper.insertUser(user);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Registration successful!')),
+        );
+        Navigator.pop(context);
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Error: Email already exists.')),
+        );
+      }
+    }
   }
 }

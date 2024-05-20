@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:pro/layouts/home_layout.dart';
 import 'package:pro/modules/login_and_register/sign_up_page.dart';
+import 'package:pro/widgets/database.dart';
 import 'package:pro/widgets/shared.dart';
 
 // ignore: must_be_immutable
@@ -18,11 +19,10 @@ class _LoginPageState extends State<LoginPage> {
   final _emailController = TextEditingController();
 
   final _passwordController = TextEditingController();
+  final DatabaseHelper _databaseHelper = DatabaseHelper();
 
   final _formKey = GlobalKey<FormState>();
   bool isPassword = true;
-  @override
-  
 
   @override
   Widget build(BuildContext context) {
@@ -106,14 +106,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      if (_formKey.currentState?.validate() ?? false) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Logging in...'),
-                          ),
-                        );
-                        Navigator.pushNamed(context, HomeLayout.routeName);
-                      }
+                      _login();
                     },
                     child: CustomButton(
                       text: 'Login',
@@ -150,5 +143,25 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  void _login() async {
+    if (_formKey.currentState?.validate() ?? false) {
+      String email = _emailController.text;
+      String password = _passwordController.text;
+      var user = await _databaseHelper.getUser(email, password);
+      if (user != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Login successful!'),
+          ),
+        );
+        Navigator.pushNamed(context, HomeLayout.routeName);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Invalid email or password')),
+        );
+      }
+    }
   }
 }
