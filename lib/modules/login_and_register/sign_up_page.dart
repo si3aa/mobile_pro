@@ -14,18 +14,16 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   final _formKey = GlobalKey<FormState>();
 
-  final _emailController = TextEditingController();
+  var emailController = TextEditingController();
 
-  final _passwordController = TextEditingController();
+  var passwordController = TextEditingController();
 
-  final _confirmPasswordController = TextEditingController();
+  var confirmPasswordController = TextEditingController();
   final DatabaseHelper _databaseHelper = DatabaseHelper();
 
   bool isPassword = true;
 
-  
-
-
+  @override
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,6 +43,7 @@ class _SignUpPageState extends State<SignUpPage> {
             child: Column(
               children: [
                 const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       'SIGN UP',
@@ -60,7 +59,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   height: 20,
                 ),
                 defaultFormField(
-                  controller: _emailController,
+                  controller: emailController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your email';
@@ -76,54 +75,52 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
                 const SizedBox(height: 16.0),
                 defaultFormField(
-                  isPassword: isPassword,
-                  controller: _passwordController,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your password';
-                    }
-
-                    return null;
-                  },
-                  lable: 'Password',
-                  type: TextInputType.visiblePassword,
-                  prefix: Icons.lock,
-                   suffix: isPassword ? Icons.visibility : Icons.visibility_off,
-                   suffixPressed: () {
-                        setState(() {
-                          isPassword = !isPassword;
-                        });
+                    isPassword: isPassword,
+                    controller: passwordController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your password';
                       }
-                ),
+
+                      return null;
+                    },
+                    lable: 'Password',
+                    type: TextInputType.visiblePassword,
+                    prefix: Icons.lock,
+                    suffix:
+                        isPassword ? Icons.visibility : Icons.visibility_off,
+                    suffixPressed: () {
+                      setState(() {
+                        isPassword = !isPassword;
+                      });
+                    }),
                 const SizedBox(height: 16.0),
                 defaultFormField(
-                   isPassword: isPassword,
+                    isPassword: isPassword,
                     lable: 'Confirm Password',
-                    controller: _confirmPasswordController,
+                    controller: confirmPasswordController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please confirm your password';
                       }
-                      if (value != _passwordController.text) {
+                      if (value != passwordController.text) {
                         return 'Passwords do not match';
                       }
                       return null;
                     },
                     type: TextInputType.visiblePassword,
                     prefix: Icons.lock,
-                   
-                    suffix: isPassword ? Icons.visibility : Icons.visibility_off,
+                    suffix:
+                        isPassword ? Icons.visibility : Icons.visibility_off,
                     suffixPressed: () {
-                        setState(() {
-                          isPassword =!isPassword;
-                        });
-                      }
-                    ),
+                      setState(() {
+                        isPassword = !isPassword;
+                      });
+                    }),
                 const SizedBox(height: 16.0),
                 GestureDetector(
                   onTap: () {
                     _register();
-                    
                   },
                   child: CustomButton(
                     text: 'Sign Up',
@@ -136,11 +133,12 @@ class _SignUpPageState extends State<SignUpPage> {
       ),
     );
   }
+
   void _register() async {
     if (_formKey.currentState?.validate() ?? false) {
       Map<String, dynamic> user = {
-        'email': _emailController.text,
-        'password': _passwordController.text,
+        'email': emailController.text,
+        'password': passwordController.text,
       };
       try {
         await _databaseHelper.insertUser(user);

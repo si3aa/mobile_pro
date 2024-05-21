@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:pro/layouts/home_layout.dart';
 import 'package:pro/modules/login_and_register/sign_up_page.dart';
 import 'package:pro/widgets/database.dart';
