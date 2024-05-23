@@ -114,7 +114,7 @@ class HomeLayout extends StatelessWidget {
                                       context: context,
                                       initialDate: DateTime.now(),
                                       firstDate: DateTime.now(),
-                                      lastDate: DateTime.parse('2024-05-25'),
+                                      lastDate: DateTime.parse('2030-12-31'),
                                     ).then(
                                       (value) {
                                         dateController.text =
