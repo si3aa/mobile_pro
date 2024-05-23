@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:pro/component/shared_pref.dart';
 import 'package:pro/layouts/home_layout.dart';
 import 'package:pro/modules/login_and_register/sign_up_page.dart';
 import 'package:pro/widgets/database.dart';
@@ -10,7 +11,9 @@ import 'package:pro/widgets/shared.dart';
 class LoginPage extends StatefulWidget {
   static String routeName = 'login';
 
-  // LoginPage({super.key});
+  const LoginPage({super.key});
+
+ 
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -152,6 +155,7 @@ class _LoginPageState extends State<LoginPage> {
       String password = _passwordController.text;
       var user = await _databaseHelper.getUser(email, password);
       if (user != null) {
+        await SharedPreferencesHelper.setLoginState(true);
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Login successful!'),
