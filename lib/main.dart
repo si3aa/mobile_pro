@@ -19,23 +19,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: FutureBuilder(
-          future: SharedPreferencesHelper.getLoginState(),
-          builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CircularProgressIndicator();
-          } else {
-            if (snapshot.data == true) {
-              return HomeLayout();
-            } else {
-              return LoginPage();
-            }
-          }
-        },
-          ),
       routes: {
         SplashScreen.routeName: (_) => const SplashScreen(),
-        LoginPage.routeName: (_) => LoginPage(),
+        LoginPage.routeName: (_) => const LoginPage(),
         SignUpPage.routeName: (_) => SignUpPage(),
         HomeLayout.routeName: (_) => HomeLayout(),
         NewTaskScreen.routeName: (_) => const NewTaskScreen(),
